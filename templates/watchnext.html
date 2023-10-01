@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommended Anime</title>
+</head>
+<body>
+    <h2>Your Anime Recommendations</h2>
+    <ul>
+        {% for anime in recommendations %}
+        <li>
+            <strong>{{ anime['English name'] }}</strong><br>
+            <img src="{{ anime['Image URL'] }}" alt="{{ anime['English name'] }}" width="200"><br>
+            Description: {{ anime['Synopsis'] }}
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
