@@ -2,7 +2,7 @@
 A recommender system using machine learning written in python
 
 # Overview
-In this project I am creating an anime recommender system. The files I used are found on Kaggle at [https://www.kaggle.com/datasets/dbdmobile/myanimelist-dataset](MyAnimeList Dataset). machine learning portion runs on PyTorch and uses a Neural Collaborative Filtering (NCF) approach. This allows the model to predict how a user might rate other anime based on the ratings they provided for the top 10. Those predictions can then be used to rank and recommend anime to the user.
+In this project I am creating an anime recommender system. The files I used are found on Kaggle at [MyAnimeList Dataset](https://www.kaggle.com/datasets/dbdmobile/myanimelist-dataset). The machine learning portion runs on PyTorch and uses a Neural Collaborative Filtering (NCF) approach. This allows the model to predict how a user might rate other anime based on the ratings they provided for the top 10 anime shown to them. Those predictions can then be used to rank and recommend anime to the user.
 
 # Files
 There are 6 files needed to run this project (in order of operation). 
