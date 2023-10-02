@@ -14,4 +14,4 @@ There are 6 files needed to run this project (in order of operation).
 6. watchnext.html -- The results page to give the user a list of 5 anime to watch based on the ratings of other anime they gave a score to in ratings.html. Found in the /templates folder
 
 # Notes
-This was all run locally using Anaconda for the Jupyter Notebooks and MS Visual Studio 2022 for the Python and HTML files. System to run / create this project has a Nvidia 2070 Super and 32 GB ram. 
+This was all run locally using Anaconda for the Jupyter Notebooks and MS Visual Studio 2022 for the Python and HTML files. System to run / create this project has a Nvidia 2070 Super and 32 GB ram. To get PyTorch to run on the GPU instead of the CPU, I has to downgrade the Nvidia CUDA toolkit from 12.2 to 11.8.

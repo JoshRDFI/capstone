@@ -7,6 +7,7 @@ from torch.utils.data import DataLoader, Dataset, random_split
 import torch.nn as nn
 
 # Load dataset
+print("Loading dataframes")
 anime_df = pd.read_csv('clean_anime.csv')
 scores_df = pd.read_csv('clean_scores.csv')
 
@@ -27,6 +28,7 @@ class AnimeRatingDataset(Dataset):
         return len(self.user_tensor)
 
 # Convert the data into tensors
+print("Converting data to tensors then creating dataset and splitting into training and validation sets")
 user_tensor = torch.tensor(scores_df['user_id'].values, dtype=torch.long)
 anime_tensor = torch.tensor(scores_df['anime_id'].values, dtype=torch.long)
 rating_tensor = torch.tensor(scores_df['rating'].values, dtype=torch.float32)
@@ -92,9 +94,11 @@ num_epochs = 5
 criterion.to(device)
 
 # Training loop
+training_start = time.time()
+print("Training loop start time (local 24h): ", time.strftime('%H:%M', time.localtime(training_start)))
 for epoch in range(num_epochs):
     print(f"Starting epoch {epoch+1}/{num_epochs}")
-    # Get start time
+    # Get loop start time
     start = time.time()
     # Display the start time in hours:minutes format
     print("Start time (local 24h): ", time.strftime('%H:%M', time.localtime(start)))
@@ -122,12 +126,17 @@ for epoch in range(num_epochs):
     avg_train_loss = train_loss / len(train_loader)
     print(f"Epoch [{epoch + 1}/{num_epochs}], Loss: {avg_train_loss:.4f}")
     # Calculate the elapsed time in hours:minutes format
-    end = time.time() # Get end time in seconds since the epoch
+    end = time.time() # Get loop end time
     elapsed_seconds = end - start
     hours, remainder = divmod(elapsed_seconds, 3600)
     minutes, _ = divmod(remainder, 60)
     print(f"Epoch took {int(hours)} hours and {int(minutes):02} minutes to run.")
-    print(f"Total runtime:  {end - start}")
+
+training_end = time.time()
+total_elapsed = training_end - training_start
+total_hours, total_remainder = divmod(total_elapsed, 3600)
+total_minutes, _ = divmod(total_remainder, 60)
+print(f"Total training runtime was {int(total_hours)} hours and {int(total_minutes):02} minutes")
     
 # Set the model to evaluation mode
 model.eval()

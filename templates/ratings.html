@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anime Ratings</title>
-    <!-- Include any required CSS files here -->
+    <title>Otaku Castle Anime Ratings</title>
+    
 </head>
 
 <body>
@@ -14,7 +14,7 @@
 
     <form id="ratingForm" action="/submit_ratings" method="post">
 
-        <!-- Display each anime with its image and rating dropdown/slider -->
+        <!-- Display each anime with its image and rating dropdown -->
         {% for anime in anime_list %}
         <div class="anime-item">
             <img src="{{ anime['Image URL'] }}" alt="{{ anime['English name'] }}">
@@ -53,7 +53,7 @@
             <option value="Special">Special</option>
         </select>
 
-        <!-- Genres (You can extend this list based on the genres available in your dataset) -->
+        <!-- Genres -->
         <label for="genres">Preferred Genres:</label>
         <select multiple id="genres" name="genres">
             <option value="Action">Action</option>
@@ -84,7 +84,7 @@
 
     </form>
 
-    <!-- Include any required JS scripts here -->
+ 
 
 </body>
 
