@@ -7,13 +7,9 @@ from torch.utils.data import DataLoader, Dataset, random_split
 import torch.nn as nn
 
 # Load dataset
-print("Loading dataframes")
-anime_df = pd.read_csv('clean_anime.csv')
-scores_df = pd.read_csv('clean_scores.csv')
+from data_loader import scores_df
+from data_loader import num_users, num_animes
 
-# Misc variables
-num_users = scores_df['user_id'].nunique()
-num_animes = anime_df['anime_id'].nunique()
 
 class AnimeRatingDataset(Dataset):
     def __init__(self, user_tensor, anime_tensor, rating_tensor):
@@ -28,9 +24,8 @@ class AnimeRatingDataset(Dataset):
         return len(self.user_tensor)
 
 # Convert the data into tensors
-print("Converting data to tensors then creating dataset and splitting into training and validation sets")
-user_tensor = torch.tensor(scores_df['user_id'].values, dtype=torch.long)
-anime_tensor = torch.tensor(scores_df['anime_id'].values, dtype=torch.long)
+user_tensor = torch.tensor(scores_df['encoded_user_id'].values, dtype=torch.long)
+anime_tensor = torch.tensor(scores_df['encoded_anime_id'].values, dtype=torch.long)
 rating_tensor = torch.tensor(scores_df['rating'].values, dtype=torch.float32)
 
 # Create the dataset
@@ -67,9 +62,9 @@ class NCF(nn.Module):
         )
         
     def forward(self, user, anime):
-        user_emb = self.user_embedding(user)
-        anime_emb = self.anime_embedding(anime)
-        
+        user_emb = self.user_embedding(user.long())
+        anime_emb = self.anime_embedding(anime.long())
+                        
         # Concatenate user and anime embeddings
         x = torch.cat((user_emb, anime_emb), 1)
         x = self.fc_layers(x)
