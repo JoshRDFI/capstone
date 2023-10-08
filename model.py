@@ -10,7 +10,6 @@ import torch.nn as nn
 from data_loader import scores_df
 from data_loader import num_users, num_animes
 
-
 class AnimeRatingDataset(Dataset):
     def __init__(self, user_tensor, anime_tensor, rating_tensor):
         self.user_tensor = user_tensor
@@ -63,8 +62,9 @@ class NCF(nn.Module):
         
     def forward(self, user, anime):
         user_emb = self.user_embedding(user.long())
+        user_emb = user_emb.squeeze(0)
         anime_emb = self.anime_embedding(anime.long())
-                        
+  
         # Concatenate user and anime embeddings
         x = torch.cat((user_emb, anime_emb), 1)
         x = self.fc_layers(x)

@@ -16,7 +16,6 @@ app.secret_key = '65489dfg4s654654df' # Set to use dot_env before going live
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 from data_loader import num_users, num_animes
 
-
 # Load model and set to eval mode
 model = NCF(num_users, num_animes)
 model.load_state_dict(torch.load('recommender_model.pth'))
@@ -26,7 +25,6 @@ model.eval()
 # Set user IDs as all users are new users
 new_user_id = scores_df['encoded_user_id'].max()
 new_user_id += 1
-
 
 def get_top_n_recommendations(user_ratings, N=10):
     # Ensure the model is set to evaluation mode
@@ -48,13 +46,13 @@ def get_top_n_recommendations(user_ratings, N=10):
         predictions = model(user_vector_tensor, anime_tensor)
 
     # Get the top N anime recommendations
-    _, indices = torch.topk(predictions, N, dim=1)
+    _, indices = torch.topk(predictions.squeeze(), N, dim=0)
     recommended_anime_ids = indices.squeeze().tolist()
-
-    # Convert encoded anime IDs back to original anime IDs
     recommended_anime_ids = [anime_df.iloc[id]['anime_id'] for id in recommended_anime_ids]
 
-    return recommended_anime_ids
+    # Convert list of IDs to a DataFrame
+    recommendations_df = anime_df[anime_df['anime_id'].isin(recommended_anime_ids)]
+    return recommendations_df
 
 # Make recommendations
 @app.route('/recommend', methods=['GET'])
@@ -76,28 +74,15 @@ def recommend():
     # Get the top 5 recommendations for the user using the processed_ratings
     recommendations = get_top_n_recommendations(processed_ratings, N=5)
 
-    # Validation
-    if len(recommendations) != 5:
-        print(f"Unexpected number of recommendations: {len(recommendations)}")
-
-    missing_columns = ['English name', 'Image URL', 'Synopsis']
-    for index, anime in recommendations.iterrows():
-        for col in missing_columns:
-            if pd.isna(anime[col]):
-                print(f"Missing or NaN value for column '{col}' in anime: {anime['anime_id']}")
-
-    # After fetching recommendations in the /recommend route
-    print("===== Recommendations =====")
-    print(recommendations)
-
     # Render the recommendations on the watchnext.html page
-    return render_template('watchnext.html', recommendations=recommendations)
+    return render_template('watchnext.html', recommendations=recommendations.to_dict(orient='records'))
+
 
 def get_top10_anime():
     # Filter out anime with Popularity of 0
     top_anime = anime_df[(anime_df['Popularity'] > 0)]
     
-    # Sort the filtered anime by rank and get the top 10
+    # Sort the filtered anime by rank
     top_30_anime = top_anime.sort_values(by='Popularity').head(30)
     
     # Randomly select 10 out of the top 30
@@ -110,10 +95,9 @@ def get_top10_anime():
 def top10anime():
     return jsonify(get_top10_anime())
  
-# Display ratings page
+# Display user ratings page
 @app.route('/rate_anime')
 def rate_anime():
-    # Get the top 10 anime list
     anime_list = get_top10_anime()
     return render_template('ratings.html', anime_list=anime_list)
 
@@ -123,10 +107,10 @@ def submit_ratings():
     # Get ratings from the form
     ratings = request.form.to_dict()
 
-    # Process the ratings (e.g., remove any anime rated 0)
+    # Process the ratings and remove any anime rated 0
     processed_ratings = {k: v for k, v in ratings.items() if v != "0"}
 
-    # Store ratings in a session variable
+    # Store ratings
     session['user_ratings'] = processed_ratings
 
     # Redirect to the recommendation route to display the recommendations
