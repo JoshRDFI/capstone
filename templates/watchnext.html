@@ -4,17 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Otaku Castle Recommended Anime</title>
+    <link rel="stylesheet" href="static/style.css" type="text/css">
 </head>
 <body>
     <h2>Your Anime Recommendations</h2>
-    <ul>
+    <ol>
         {% for anime in recommendations %}
         <li>
-            <strong>{{ anime['English name'] }}</strong><br>
-            <img src="{{ anime['Image URL'] }}" alt="{{ anime['English name'] }}" width="200"><br>
-            Description: {{ anime['Synopsis'] }}
+            <table border="0">
+                <tr><th><h2>{{ anime['English name'] }}</h2></th></tr>
+                <tr>
+                    <td class="rightbox"><img src="{{ anime['Image URL'] }}" alt="{{ anime['English name'] }}" width="200"></td>
+                    <td class="desc"><strong>Description:</strong> {{ anime['Synopsis'] }}</td>
+                </tr>
+            </table>
+            <p>&nbsp;</p>
         </li>
         {% endfor %}
-    </ul>
+    </ol>
 </body>
 </html>
