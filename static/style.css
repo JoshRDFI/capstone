@@ -34,14 +34,10 @@ ol {
     padding: 0;
 }
 
-a {
-    font-size: 1.2em;
-}
-
 .desc {
     font-size: 1em;
     margin: 20px;
-    width: 90%;
+    width: 88%;
     text-align: left;
 }
 
@@ -75,14 +71,10 @@ a {
     display: table-cell;
 }
 
-.columns {
-    columns: 2;
-    margin: auto;
-    width: 80%;
-}
-
-.block {
-    width: 90%;
-    margin: auto;
-    font-size: .8em;
+.anime-item {
+    text-align: left;
+    font-size: 1em;
+    margin: 20px;
+    width: 88%;
+    text-align: left;
 }

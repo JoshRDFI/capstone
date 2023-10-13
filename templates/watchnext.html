@@ -14,7 +14,11 @@
             <table border="0">
                 <tr><th><h2>{{ anime['English name'] }}</h2></th></tr>
                 <tr>
-                    <td class="rightbox"><img src="{{ anime['Image URL'] }}" alt="{{ anime['English name'] }}" width="200"></td>
+                    <td class="rightbox">
+                        <img src="{{ anime['Image URL'] }}" alt="{{ anime['English name'] }}" width="200"><br />
+                        <strong>Genres:</strong> {{ anime['Genres'].strip("[]").replace("'", "").replace('"', '').split(", ")|join(", ") }} <br />
+                        <strong>Type:</strong> {{ anime['Type'] }}
+                    </td>
                     <td class="desc"><strong>Description:</strong> {{ anime['Synopsis'] }}</td>
                 </tr>
             </table>
