@@ -2,7 +2,7 @@
 A recommender system using machine learning written in python
 
 # Overview
-In this project I am creating an anime recommender system. The files I used are found on Kaggle at [MyAnimeList Dataset](https://www.kaggle.com/datasets/dbdmobile/myanimelist-dataset). The machine learning portion runs on PyTorch and uses a Neural Collaborative Filtering (NCF) approach. This allows the model to predict how a user might rate other anime based on the ratings they provided for the top 10 anime shown to them. Those predictions can then be used to rank and recommend anime to the user.
+In this project I created an anime recommender system. The files I used are found on Kaggle at [MyAnimeList Dataset](https://www.kaggle.com/datasets/dbdmobile/myanimelist-dataset). The machine learning portion runs on PyTorch and uses a Neural Collaborative Filtering (NCF) approach. This allows the model to predict how a user might rate other anime based on the ratings they provided for the top 10 anime shown to them. Those predictions can then be used to rank and recommend anime to the user.
 
 # Files
 These are the files needed to run this project (in order of operation). 
@@ -17,4 +17,4 @@ These are the files needed to run this project (in order of operation).
 # Notes
 To run these files on your own system, you will first need to download the CSV files from Kaggle (linked above). 
 
-This was all run locally using Anaconda for the Jupyter Notebooks and MS Visual Studio 2022 for the Python and HTML files. System to run / create this project has a Nvidia 2070 Super and 32 GB ram. To get PyTorch to run on the GPU instead of the CPU, I has to downgrade the Nvidia CUDA toolkit from 12.2 to 11.8.
+This was all run locally using Anaconda for the Jupyter Notebooks and MS Visual Studio 2022 for the Python and HTML files. System to run / create this project has a Nvidia 2070 Super and 32 GB ram. To get PyTorch to run on the GPU instead of the CPU, I had to downgrade the Nvidia CUDA toolkit from 12.2 to 11.8.
